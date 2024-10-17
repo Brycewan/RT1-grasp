@@ -6,4 +6,5 @@ This repository contains the implementation of a grasping task based on *["RT-1:
 
 # Data demo
 
-![data](README/data.gif)
+<img src="README/data.gif" alt="data" style="zoom: 25%;" />
+
