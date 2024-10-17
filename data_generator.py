@@ -6,6 +6,7 @@ import numpy as np
 from panda_sim import PandaSim
 from PIL import Image
 
+
 # Dictionary defining various camera views along with their configuration parameters
 CAM_INFO = {
     "front": [
