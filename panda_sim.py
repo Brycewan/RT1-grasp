@@ -35,6 +35,8 @@ class PandaSim(object):
         self.joint_indices = [0, 1, 2, 3, 4, 5, 6]
         self.DOF = 7
         self.EndEffectorIndex = 11
+        self.gripper_range = [0.01, 0.04]
+        self.finger_index = [9, 10]
 
     def load_assets(self):
         self.target_obj = self.bullet_client.loadURDF("assets/cube/cube.urdf", [0, 0.65, 0.82], globalScaling=0.04, flags=self.flags)
@@ -78,9 +80,9 @@ class PandaSim(object):
             x = random.uniform(tar_obj_range[0], tar_obj_range[1])
             y = random.uniform(tar_obj_range[2], tar_obj_range[3])
             r = random.uniform(tar_obj_range[4], tar_obj_range[5])
-            pos = [x, y, 0.745]  # Set the z-coordinate (height) of the object
+            pos = [x, y, 0.665]  # Set the z-coordinate (height) of the object
             rot = p.getQuaternionFromEuler(
-                [0, np.pi / 2, 0]
+                [0, -np.pi, 0]
             )  # Convert Euler angles to quaternion
         else:
             x, y = target_pos[0], target_pos[1]
@@ -127,6 +129,21 @@ class PandaSim(object):
                 controlMode=self.bullet_client.POSITION_CONTROL, 
                 targetPosition=joint_poses[i], 
                 force=500
+            )
+            
+    def move_gripper(self, gripper_state):
+        gripper_pos = (
+            gripper_state * (self.gripper_range[1] - self.gripper_range[0])
+            + self.gripper_range[0]
+        )
+        for i, j_idx in enumerate(self.finger_index):
+            self.bullet_client.setJointMotorControl2(
+                self.robot,
+                j_idx,
+                self.bullet_client.POSITION_CONTROL,
+                gripper_pos,
+                maxVelocity=0.1,
+                force=1000,
             )
 
 
