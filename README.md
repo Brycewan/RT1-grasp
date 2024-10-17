@@ -4,9 +4,13 @@ This repository contains the implementation of a grasping task based on *["RT-1:
 
 
 
+
+
 ## Demo
 
 <img src="README/data.gif" alt="data" style="zoom: 25%;" />
+
+
 
 
 
